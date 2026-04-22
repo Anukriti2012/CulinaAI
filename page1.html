@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Culina AI | Smart Meal Planning</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    
+    .feature-card {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(59, 130, 246, 0.5);
+        background: rgba(30, 41, 59, 0.8);
+    }
+
+    .step-number {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+
+    .hero-bg {
+        background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent),
+                    radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), transparent),
+                    #0f172a;
+    }
+
+    #ingredientChips::-webkit-scrollbar {
+      width: 6px;
+    }
+    #ingredientChips::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body class="bg-[#0f172a] text-white">
+
+  <div id="loader" class="hidden fixed top-0 left-0 w-full h-full bg-black/80 flex items-center justify-center z-50">
+    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-cyan-500"></div>
+  </div>
+
+  <section id="intro" class="min-h-screen w-full hero-bg flex flex-col">
+    <nav class="flex justify-between items-center px-8 md:px-16 py-6">
+        <div class="flex items-center gap-2">
+            <div class="bg-cyan-500 p-2 rounded-lg">🍴</div>
+            <span class="text-2xl font-extrabold tracking-tight text-white">Culina AI</span>
+        </div>
+        <div class="hidden md:flex gap-4">
+            <button class="px-5 py-2 text-sm font-semibold hover:text-cyan-400 transition">Sign In</button>
+            <button onclick="goToApp()" class="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 font-bold transition">Get Started</button>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 py-12 grid lg:grid-cols-2 gap-12 items-center flex-grow">
+        <div class="space-y-8 text-center lg:text-left">
+            <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+                Create a Meal Plan <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Tailored For You</span>
+            </h1>
+            <p class="text-slate-400 text-lg md:text-xl max-w-lg mx-auto lg:mx-0">
+                Upload a dish image and get instant recipes, ingredients, nutrition values, substitutes & translations using AI.
+            </p>
+            <button onclick="goToApp()" class="px-10 py-4 bg-blue-600 rounded-xl text-lg font-bold shadow-xl hover:bg-blue-700 hover:scale-105 transition-all inline-flex items-center gap-2">
+                Get Started <span class="text-xl">→</span>
+            </button>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 relative">
+            <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800" class="rounded-3xl w-full h-80 object-cover shadow-2xl" alt="Dish 1">
+            <div class="flex flex-col gap-4">
+                <img src="https://images.unsplash.com/photo-1543353071-873f17a7a088?q=80&w=800" class="rounded-3xl w-full h-44 object-cover shadow-xl" alt="Dish 2">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800" class="rounded-3xl w-full h-32 object-cover shadow-xl" alt="Dish 3">
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-3 gap-8">
+        <div class="feature-card p-8 rounded-3xl">
+            <div class="bg-blue-500/20 text-blue-400 w-12 h-12 rounded-xl flex items-center justify-center mb-6">📷</div>
+            <h3 class="text-xl font-bold mb-4">Ingredient Recognition</h3>
+            <p class="text-slate-400">Upload photos of ingredients and our AI will identify them to create delicious plans with what you have.</p>
+        </div>
+        <div class="feature-card p-8 rounded-3xl">
+            <div class="bg-emerald-500/20 text-emerald-400 w-12 h-12 rounded-xl flex items-center justify-center mb-6">🍳</div>
+            <h3 class="text-xl font-bold mb-4">Personalized Meal Plans</h3>
+            <p class="text-slate-400">Get custom plans based on your dietary preferences, allergies, and nutritional goals tailored to you.</p>
+        </div>
+        <div class="feature-card p-8 rounded-3xl">
+            <div class="bg-purple-500/20 text-purple-400 w-12 h-12 rounded-xl flex items-center justify-center mb-6">📊</div>
+            <h3 class="text-xl font-bold mb-4">Nutrition Tracking</h3>
+            <p class="text-slate-400">Track your calorie and macro intake by simply taking pictures of your meals for effortless monitoring.</p>
+        </div>
+    </div>
+
+    <div class="bg-[#1e293b]/30 py-24 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-extrabold mb-4">How It Works</h2>
+            <p class="text-slate-400 mb-16">Three simple steps to get personalized meal plans</p>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="group">
+                    <div class="step-number bg-blue-600 mx-auto mb-6 group-hover:scale-110 transition">1</div>
+                    <h4 class="text-xl font-bold mb-2">Add Your Ingredients</h4>
+                    <p class="text-slate-400">Take a photo of your ingredients or add them manually to get started.</p>
+                </div>
+                <div class="group">
+                    <div class="step-number bg-emerald-500 mx-auto mb-6 group-hover:scale-110 transition">2</div>
+                    <h4 class="text-xl font-bold mb-2">Set Your Preferences</h4>
+                    <p class="text-slate-400">Tell us about your dietary restrictions, allergies, and protein goals.</p>
+                </div>
+                <div class="group">
+                    <div class="step-number bg-purple-600 mx-auto mb-6 group-hover:scale-110 transition">3</div>
+                    <h4 class="text-xl font-bold mb-2">Get Your Meal Plan</h4>
+                    <p class="text-slate-400">Receive a customized weekly meal plan optimized for your needs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <section id="app" class="hidden min-h-screen w-full bg-[#0f172a] flex items-center justify-center p-4 md:p-8">
+    <div class="backdrop-blur-md bg-slate-900/50 shadow-2xl border border-white/10 rounded-3xl p-6 md:p-10 w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10">
+      
+      <div class="flex flex-col items-center space-y-6">
+        <h2 class="text-3xl font-bold text-white">Upload Dish Image</h2>
+
+        <div id="uploadBox" class="w-full h-64 border-2 border-dashed border-slate-700 rounded-2xl flex flex-col items-center justify-center text-slate-400 relative overflow-hidden bg-slate-800/50">
+          <div id="placeholderText" class="text-center p-4">
+             <span class="text-4xl mb-2 block">☁️</span>
+             <p>Drag and drop or click to browse</p>
+          </div>
+          <img id="previewImg" class="hidden w-full h-full object-cover" />
+        </div>
+
+        <input id="imgInput" type="file" accept="image/*" class="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer"/>
+
+        <div class="grid grid-cols-2 gap-4 w-full">
+            <button onclick="processImage()" class="py-4 bg-emerald-500 text-white text-lg rounded-xl font-bold shadow-lg hover:bg-emerald-600 active:scale-95 transition-all">
+              Analyze Dish
+            </button>
+            <button onclick="resetApp()" class="py-4 bg-slate-700 text-white text-lg rounded-xl font-bold shadow-lg hover:bg-slate-600 active:scale-95 transition-all">
+              Reset Analysis
+            </button>
+        </div>
+      </div>
+
+      <div id="rightPanel" class="p-6 bg-slate-800/40 rounded-2xl border border-white/5 overflow-y-auto max-h-[700px]">
+        <div id="instructionBox" class="text-center py-10">
+          <div class="text-6xl mb-4">🥗</div>
+          <h3 class="text-2xl font-bold text-white mb-2">Ready to Cook?</h3>
+          <p class="text-slate-400">Upload a food image on the left to get instant recipes and AI insights.</p>
+        </div>
+
+        <div id="results" class="hidden space-y-8">
+          <h2 id="dishName" class="text-3xl font-extrabold text-cyan-400"></h2>
+        
+          <div>
+            <p class="text-xs uppercase tracking-widest text-slate-500 mb-4 font-bold">Similar Dishes</p>
+            <div id="dishGrid" class="flex flex-wrap gap-2"></div>
+            <button id="seeMoreBtn" onclick="showMoreDishes()" class="hidden mt-4 text-sm text-cyan-400 hover:underline">See more options...</button>
+          </div>
+          
+          <div class="pt-6 border-t border-white/5">
+    <h3 class="text-xl font-bold mb-4 text-cyan-400">Ingredients Required</h3>
+    <div id="recipeIngredients" class="flex flex-wrap gap-2 p-3 rounded-xl bg-black/20 border border-white/5 min-h-[50px]">
+        </div>
+    <p class="text-xs text-slate-500 mt-2 italic">* Ingredients detected automatically from recipe data.</p>
+</div> 
+
+          <div class="pt-6 border-t border-white/5">
+            <h3 class="text-xl font-bold mb-3">Steps</h3>
+            <ol id="steps" class="list-decimal list-inside text-slate-300 space-y-2 leading-relaxed"></ol>
+          </div>
+
+<div class="pt-6 border-t border-white/5">
+    <h3 class="text-xl font-bold mb-4">Select Ingredients You Have</h3>
+    
+    <div class="relative mb-4">
+        <input type="text" id="ingSearch" oninput="renderIngredientChips()" placeholder="Search ingredients (e.g. flour, milk)..." 
+               class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 transition-colors">
+        <span class="absolute right-4 top-3 text-slate-500">🔍</span>
+    </div>
+
+    <div id="ingredientChips" class="max-h-48 overflow-y-auto flex flex-wrap gap-2 p-3 rounded-xl bg-black/20 border border-white/5"></div>
+    
+    <button id="toggleIngredientBtn" onclick="toggleIngredients()" class="mt-2 text-sm text-slate-400 hover:text-white">Show more</button>
+    
+    <div id="selectedIngSubstitutes" class="mt-4 hidden p-4 bg-orange-500/10 border border-orange-500/30 rounded-xl">
+        <h4 class="text-orange-400 font-bold text-sm mb-2">💡 Alternatives for your selection:</h4>
+        <div id="ingSubList" class="text-xs text-slate-300 space-y-1"></div>
+    </div>
+
+    <button onclick="rerankWithIngredients()" class="w-full mt-4 py-3 bg-blue-600 rounded-xl text-white font-bold hover:bg-blue-700 transition">
+        Recommend Best Based on My Fridge
+    </button>
+</div>
+        
+          
+          <div class="pt-6 border-t border-white/5">
+            <h3 class="text-xl font-bold mb-2 text-orange-400">Substitutes</h3>
+            <p id="substitution" class="text-slate-300 italic"></p>
+          </div>
+
+          <div class="pt-6 border-t border-white/5">
+            <h3 class="text-xl font-bold mb-3">Nutritional Profile</h3>
+            <div class="bg-white p-4 rounded-xl">
+               <canvas id="nutritionChart"></canvas>
+            </div>
+          </div>
+
+
+          <div class="flex flex-col gap-4 pt-6 border-t border-white/5">
+    <div class="flex items-center gap-2">
+        <select id="langSelect" class="bg-slate-700 text-white p-2 rounded-lg flex-grow border border-white/10">
+            <option value="hi">Hindi</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+        </select>
+        <button onclick="translateText()" class="px-4 py-2 bg-slate-600 rounded-lg font-bold hover:bg-slate-500">Translate</button>
+    </div>
+    <div id="translatedContainer" class="hidden bg-black/20 p-4 rounded-xl border border-cyan-500/30">
+        <h4 class="text-cyan-400 font-bold mb-2">Translation:</h4>
+        <p id="translated" class="text-slate-300 leading-relaxed"></p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2">
+        <button onclick="readRecipe()" class="py-3 bg-cyan-600/20 text-cyan-400 border border-cyan-400/30 rounded-xl font-bold hover:bg-cyan-600 hover:text-white transition">
+           🔊 Listen
+        </button>
+        <button onclick="stopReading()" class="py-3 bg-red-600/20 text-red-400 border border-red-400/30 rounded-xl font-bold hover:bg-red-600 hover:text-white transition">
+           🛑 Stop
+        </button>
+    </div>
+</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<script>
+  let uploadedImageId = null;
+  let currentDishes = [];
+  let visibleCount = 5;
+  let allIngredients = [];
+  let selectedIngredients = new Set();
+  let ingredientLimit = 15;
+  let showingAllIngredients = false;
+  let nutritionChart;
+
+const INGREDIENT_SUBSTITUTES = {
+    "milk": ["Oat milk", "Almond milk", "Soy milk"],
+    "eggs": ["Applesauce", "Flaxseed meal", "Silken tofu"],
+    "butter": ["Ghee", "Coconut oil", "Margarine"],
+    "sugar": ["Honey", "Stevia", "Jaggery", "Maple syrup"],
+    "all-purpose flour": ["Whole wheat flour", "Almond flour", "Gluten-free blend"],
+    "yogurt": ["Greek yogurt", "Coconut yogurt", "Sour cream"],
+    "paneer": ["Tofu", "Halloumi"],
+    "meat": ["Mushrooms", "Jackfruit", "Seitan"],
+    "cream": ["Coconut cream", "Evaporated milk", "Cashew paste"],
+    "ajwain": ["Dried thyme", "Caraway seeds", "Oregano"],
+    "cumin": ["Ground coriander", "Fennel seeds", "Caraway seeds"],
+    "turmeric": ["Saffron", "Ginger", "Curry powder"],
+    "black pepper": ["White pepper", "Paprika", "Cayenne pepper"],
+    "nutmeg": ["Mace", "Allspice", "Cinnamon"],
+    "vanilla extract": ["Almond extract", "Maple syrup", "Honey"],
+    "coconut": ["Coconut cream", "Coconut milk", "Coconut yogurt"],
+};
+
+  function goToApp() {
+    document.getElementById('intro').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }
+
+  document.getElementById("imgInput").addEventListener("change", function (e) {
+    const file = e.target.files[0];
+    if (file) {
+      document.getElementById("placeholderText").classList.add("hidden");
+      const img = document.getElementById("previewImg");
+      img.src = URL.createObjectURL(file);
+      img.classList.remove("hidden");
+    }
+  });
+
+  function resetApp() {
+      document.getElementById("imgInput").value = "";
+      document.getElementById("previewImg").classList.add("hidden");
+      document.getElementById("previewImg").src = "";
+      document.getElementById("placeholderText").classList.remove("hidden");
+      document.getElementById("results").classList.add("hidden");
+      document.getElementById("instructionBox").classList.remove("hidden");
+
+      selectedIngredients.clear();
+      uploadedImageId = null;
+      currentDishes = [];
+      
+      document.getElementById("dishName").innerText = "";
+      document.getElementById("steps").innerHTML = "";
+      document.getElementById("substitution").innerText = "";
+      document.getElementById("translated").innerText = "";
+
+      if (nutritionChart) {
+          nutritionChart.destroy();
+          nutritionChart = null;
+      }
+  }
+
+  async function processImage() {
+    const fileInput = document.getElementById("imgInput");
+    if (!fileInput.files.length) {
+      alert("Please upload a dish image first!");
+      return;
+    }
+
+    document.getElementById("loader").classList.remove("hidden");
+    const formData = new FormData();
+    formData.append("image", fileInput.files[0]);
+
+    try {
+        const res = await fetch("http://127.0.0.1:8000/predict-image", { method: "POST", body: formData });
+        const data = await res.json();
+
+        uploadedImageId = data.image_id;
+        document.getElementById("instructionBox").classList.add("hidden");
+        document.getElementById("results").classList.remove("hidden");
+        
+        loadIngredients();
+
+        currentDishes = data.similar_dishes;
+        visibleCount = 5;
+        renderDishes();
+
+    } catch (e) {
+        console.error("Error:", e);
+        alert("Server connection error.");
+    } finally {
+        document.getElementById("loader").classList.add("hidden");
+    }
+  }
+
+  function renderDishes() {
+    const grid = document.getElementById("dishGrid");
+    grid.innerHTML = "";
+    
+    currentDishes.slice(0, visibleCount).forEach((dishObj, index) => {
+        const card = document.createElement("button");
+        card.className = "cursor-pointer bg-slate-800 hover:bg-blue-600 border border-white/5 px-4 py-2 rounded-lg text-sm transition-all";
+        
+        const displayName = typeof dishObj === 'string' ? dishObj : dishObj.dish;
+        card.innerText = displayName.replaceAll("_", " ");
+        
+        card.onclick = () => displayRecipeDetails(dishObj);
+        grid.appendChild(card);
+
+        if (index === 0) {
+            displayRecipeDetails(dishObj);
+        }
+    });
+    
+    document.getElementById("seeMoreBtn").classList.toggle("hidden", currentDishes.length <= visibleCount);
+  }
+
+function displayRecipeDetails(dish) {
+    if (typeof dish === 'string') return;
+
+    document.getElementById("dishName").innerText = dish.dish;
+
+    // --- NEW: POPULATE INGREDIENTS LIST ---
+    const ingContainer = document.getElementById("recipeIngredients");
+    ingContainer.innerHTML = "";
+    
+    // We pull the ingredients from the dish object returned by the backend
+    if (dish.ingredients && dish.ingredients.length > 0) {
+        dish.ingredients.forEach(ing => {
+            const chip = document.createElement("span");
+            chip.className = "px-3 py-1 rounded-full text-xs font-medium bg-slate-800 border border-slate-700 text-slate-300";
+            chip.innerText = ing;
+            ingContainer.appendChild(chip);
+        });
+    } else {
+        ingContainer.innerHTML = "<span class='text-slate-500 text-sm'>No ingredient data available.</span>";
+    }
+
+    // --- STEPS LOGIC ---
+    const stepsList = document.getElementById("steps");
+    stepsList.innerHTML = ""; 
+    const rawSteps = dish.instructions || "";
+    const stepsArray = rawSteps.split(/\n|\r|\. /);
+
+    stepsArray.forEach(step => {
+        const cleaned = step.trim();
+        if(cleaned.length > 5) { 
+            const li = document.createElement("li");
+            li.innerText = cleaned;
+            stepsList.appendChild(li);
+        }
+    });
+
+    // --- SUBSTITUTES LOGIC ---
+    const subBox = document.getElementById("substitution");
+    subBox.innerHTML = "";
+    if (dish.substitutes && dish.substitutes.includes("|")) {
+        const subList = dish.substitutes.split(" | ");
+        subList.forEach(item => {
+            const p = document.createElement("p");
+            p.className = "mb-1 text-orange-300";
+            p.innerText = "• " + item;
+            subBox.appendChild(p);
+        });
+    } else {
+        subBox.innerText = dish.substitutes || "Check local pantry for alternatives.";
+    }
+    
+    const nutrition = dish.nutrition || { calories: 0, protein: 0, fat: 0 };
+    drawNutritionChart(nutrition.calories, nutrition.protein, nutrition.fat);
+}
+
+  function drawNutritionChart(calories, protein, fat) {
+    const ctx = document.getElementById('nutritionChart').getContext('2d');
+    if (nutritionChart) nutritionChart.destroy();
+    nutritionChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Calories (kcal)', 'Protein (g)', 'Fat (g)'],
+        datasets: [{
+          data: [calories, protein, fat],
+          backgroundColor: ['#3b82f6', '#10b981', '#f59e0b']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { 
+            y: { 
+                beginAtZero: true,
+                suggestedMax: Math.max(calories, protein, fat) + 50 
+            } 
+        }
+      }
+    });
+  }
+
+  async function loadIngredients() {
+    try {
+        const res = await fetch("http://127.0.0.1:8000/ingredients");
+        const data = await res.json();
+        allIngredients = data.ingredients;
+        renderIngredientChips();
+    } catch(e) { console.log("Ingredients API error"); }
+  }
+
+  function renderIngredientChips() {
+    const container = document.getElementById("ingredientChips");
+    // This line was missing or not being used correctly:
+    const searchVal = document.getElementById("ingSearch").value.toLowerCase();
+    container.innerHTML = "";
+
+    // 1. Filter the huge list based on what the user is typing
+    let filtered = allIngredients.filter(ing => ing.toLowerCase().includes(searchVal));
+    
+    // 2. Decide how many to show
+    const list = showingAllIngredients ? filtered : filtered.slice(0, ingredientLimit);
+
+    if (list.length === 0) {
+        container.innerHTML = `<p class="text-slate-500 text-sm p-2">No ingredients found matching "${searchVal}"</p>`;
+        return;
+    }
+
+    list.forEach(ing => {
+        const isSelected = selectedIngredients.has(ing);
+        const chip = document.createElement("button");
+        chip.innerText = ing;
+        chip.className = `px-3 py-1 rounded-full text-xs font-medium transition-all border ${
+            isSelected 
+            ? "bg-cyan-500 border-cyan-400 text-white shadow-[0_0_10px_rgba(6,182,212,0.4)]" 
+            : "bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500"
+        }`;
+        
+        chip.onclick = () => {
+            if(isSelected) {
+                selectedIngredients.delete(ing);
+            } else {
+                selectedIngredients.add(ing);
+            }
+            // Update the display for BOTH the list and the substitutes
+            updateIngredientSubstitutes(); 
+            renderIngredientChips();
+        };
+        container.appendChild(chip);
+    });
+    
+    document.getElementById("toggleIngredientBtn").innerText = showingAllIngredients ? "Show less" : "Show more";
+}
+
+function updateIngredientSubstitutes() {
+    const subContainer = document.getElementById("selectedIngSubstitutes");
+    const subList = document.getElementById("ingSubList");
+    subList.innerHTML = "";
+    let foundAny = false;
+
+    // Display selected ingredients prominently at the top of the substitute box
+    if (selectedIngredients.size > 0) {
+        subContainer.classList.remove("hidden");
+        
+        // Add a "Selected" header
+        const header = document.createElement("p");
+        header.className = "text-cyan-400 font-bold text-xs mb-2 border-b border-white/10 pb-1";
+        header.innerText = "Current Selection:";
+        subList.appendChild(header);
+
+        selectedIngredients.forEach(ing => {
+            const lowerIng = ing.toLowerCase();
+            const item = document.createElement("div");
+            item.className = "mb-2 p-2 bg-white/5 rounded-lg";
+            
+            // Show the Ingredient + Substitutes if they exist
+            let subText = INGREDIENT_SUBSTITUTES[lowerIng] 
+                ? ` → Try: ${INGREDIENT_SUBSTITUTES[lowerIng].join(", ")}` 
+                : " (No specific substitutes found)";
+                
+            item.innerHTML = `<span class="text-white font-semibold">${ing}</span><span class="text-slate-400">${subText}</span>`;
+            subList.appendChild(item);
+        });
+    } else {
+        subContainer.classList.add("hidden");
+    }
+}
+
+function toggleIngredients() {
+    showingAllIngredients = !showingAllIngredients;
+    renderIngredientChips();
+  }
+
+  function showMoreDishes() {
+    visibleCount = 15;
+    renderDishes();
+  }
+
+  async function rerankWithIngredients() {
+    if (!uploadedImageId) return alert("Analyze an image first");
+    
+    document.getElementById("loader").classList.remove("hidden");
+    try {
+        const res = await fetch("http://127.0.0.1:8000/rerank", {
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ 
+              image_id: uploadedImageId, 
+              ingredients: Array.from(selectedIngredients) 
+          })
+        });
+        
+        const data = await res.json();
+        currentDishes = data.recommended_dishes; 
+        renderDishes();
+    } catch (e) {
+        alert("Reranking failed.");
+    } finally {
+        document.getElementById("loader").classList.add("hidden");
+    }
+  }
+
+  async function translateText() {
+      const lang = document.getElementById('langSelect').value;
+      const stepsText = document.getElementById("steps").innerText;
+      const translatedDisplay = document.getElementById('translated');
+      const container = document.getElementById('translatedContainer');
+
+      if (!stepsText || stepsText.includes("Preparation steps")) return;
+
+      translatedDisplay.innerText = "Translating... Please wait.";
+      container.classList.remove('hidden');
+
+      try {
+          const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(stepsText.substring(0, 500))}&langpair=en|${lang}`);
+          const data = await res.json();
+          translatedDisplay.innerText = data.responseData.translatedText;
+      } catch (error) {
+          translatedDisplay.innerText = "Error: Could not reach translation service.";
+      }
+  }
+
+  function readRecipe() {
+      window.speechSynthesis.cancel();
+      const translatedText = document.getElementById("translated").innerText;
+      const originalText = document.getElementById("steps").innerText;
+      const textToRead = (translatedText && !translatedText.includes("Translating")) ? translatedText : originalText;
+      const lang = document.getElementById('langSelect').value;
+
+      const speech = new SpeechSynthesisUtterance(textToRead);
+      const langMap = { 'hi': 'hi-IN', 'es': 'es-ES', 'fr': 'fr-FR', 'de': 'de-DE' };
+      speech.lang = langMap[lang] || 'en-US';
+      window.speechSynthesis.speak(speech);
+  }
+
+  function stopReading() {
+      window.speechSynthesis.cancel();
+  }
+</script>
+
+<footer class="text-center text-gray-400 py-6 text-sm">
+  © 2026 Culina AI • Academic Project
+</footer>
+
+</body>
+</html>
