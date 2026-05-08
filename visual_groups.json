@@ -1,0 +1,331 @@
+{
+  "lassi_milkshake": [
+    "aam_lassi",
+    "lassi",
+    "sweet_lassi",
+    "salty_lassi",
+    "mint_lassi",
+    "lemon_lassi",
+    "fruit_lassi",
+    "rich_mango_lassi",
+    "strawberry_lassi",
+    "sweet_peach_lassi",
+    "blueberry_lassi",
+    "chaanch",
+    "chaas",
+    "cool_buttermilk"
+  ],
+
+  "drinks_juices": [
+    "mango_juice",
+    "carrot_juice",
+    "passion_fruit_juice",
+    "watermelon_and_mint_juice",
+    "tamarind_juice",
+    "tamarind_sharbat",
+    "nimbu_pani",
+    "jal_jeera",
+    "thanda_jal_jeera",
+    "sherbat",
+    "iced_lemonade",
+    "sweet_and_salty_lemonade"
+  ],
+
+  "milk_based_dessert": [
+    "kheer",
+    "fruit_kheer",
+    "badam_kheer",
+    "rose_kheer",
+    "sabudana_kheer",
+    "vermicelli_kheer",
+    "paal_payasam",
+    "dal_payasam",
+    "firni",
+    "rice_pudding",
+    "indian_rice_pudding",
+    "sweet_rice_pudding"
+  ],
+
+  "halwa_dessert": [
+    "gajar_halva",
+    "carrot_halva",
+    "sooji_halwa",
+    "semolina_halwa",
+    "moong_dal_halwa",
+    "walnut_halwa",
+    "doodhi_halwa",
+    "anjeer_halwa",
+    "apple_halwa"
+  ],
+
+  "indian_sweets_barfi_ladoo": [
+    "barfi",
+    "besan_burfi",
+    "milk_barfi",
+    "lauki_ki_barfi",
+    "coconut_barfi",
+    "chocolate_barfi",
+    "peanut_barfi",
+    "sev_barfi",
+    "khajur_barfi",
+    "kalakand",
+    "pedhas",
+    "motichur_laddoo",
+    "til_ke_ladoo",
+    "sweet_laddu",
+    "malai_ladoo",
+    "rava_ka_ladoo"
+  ],
+
+  "frozen_dessert": [
+    "kulfi",
+    "mango_kulfi",
+    "chocolate_kulfi",
+    "chai_kulfi",
+    "mango_ice_cream",
+    "tutti_frutti_ice_cream",
+    "ice_cream_chocolate_cake",
+    "falooda"
+  ],
+
+  "gravy_curry": [
+    "chicken_curry",
+    "beef_curry",
+    "mutton_curry",
+    "lamb_curry",
+    "goat_curry",
+    "fish_curry",
+    "egg_curry",
+    "vegetable_curry",
+    "pumpkin_curry",
+    "okra_curry",
+    "yam_curry",
+    "yellow_indian_curry",
+    "south_indian_fish_curry",
+    "tuna_curry",
+    "spicy_indian_beef_curry",
+    "malabar_chicken_curry",
+    "hyderabad_chicken_curry"
+  ],
+
+  "creamy_gravy": [
+    "butter_chicken",
+    "paneer_butter_masala",
+    "paneer_makhani",
+    "paneer_masala",
+    "vegetable_makhani",
+    "korma",
+    "lamb_korma",
+    "mutton_korma",
+    "shrimp_korma",
+    "navratan_korma"
+  ],
+
+  "dal_lentil": [
+    "tadka_dal",
+    "masala_dal",
+    "palak_dal",
+    "daal_makhani",
+    "dal_makhani",
+    "hyderabadi_khatti_dal",
+    "sour_dal",
+    "channa_dal"
+  ],
+
+  "rice_biryani": [
+    "chicken_biryani",
+    "beef_biryani",
+    "egg_biryani",
+    "vegetable_biryani",
+    "prawn_biryani",
+    "mughlai_biryani",
+    "lamb_biriyani",
+    "yakhni_pulao"
+  ],
+
+  "rice_mixed": [
+    "veg_fried_rice",
+    "mixed_fried_rice",
+    "turmeric_fried_rice",
+    "spicy_rice",
+    "pea_pulao",
+    "vegetable_pulao",
+    "soybean_pilaf",
+    "vermicelli_pilaf",
+    "jeera_rice"
+  ],
+
+  "south_indian_breakfast": [
+    "idli",
+    "dosas",
+    "masala_dosa",
+    "neer_dosa",
+    "methi_dosa",
+    "corn_dosa",
+    "moong_dal_dosa",
+    "medu_vada",
+    "sambhar_vada",
+    "thayir_vada",
+    "venn_pongal",
+    "upma",
+    "ravai_uppamma",
+    "semiya_upma"
+  ],
+
+  "indian_flatbread": [
+    "chapati",
+    "roti",
+    "naan",
+    "kulcha",
+    "bhatura",
+    "poori",
+    "paratha",
+    "laccha_paratha",
+    "aloo_paratha",
+    "gobi_paratha",
+    "paneer_paratha",
+    "onion_paratha",
+    "methi_paratha",
+    "khasta_roti",
+    "mughlai_roti"
+  ],
+
+  "raita": [
+    "aloo_raita",
+    "boondi_raita",
+    "beet_raita",
+    "cucumber_raita",
+    "palak_raita",
+    "jamun_raita",
+    "spinach_and_dill_raita",
+    "spinach_yogurt_raita",
+    "pomegranate_raita",
+    "zucchini_raita",
+    "yellow_pumpkin_raitha",
+    "sweet_banana_raita"
+  ],
+
+  "chutney_pickle": [
+    "mint_chutney",
+    "coconut_chutney",
+    "date_chutney",
+    "raw_mango_chutney",
+    "tamarind_chutney",
+    "imli_chutney",
+    "tomato_chutney",
+    "small_onion_chutney",
+    "traditional_onion_chutney",
+    "mango_pickle",
+    "lemon_pickle",
+    "lime_pickle",
+    "tomato_pickle",
+    "sweet_indian_lemon_pickles"
+  ],
+
+  "fried_snacks": [
+    "pakora",
+    "aloo_pakora",
+    "paneer_pakora",
+    "vegetable_pakoras",
+    "spinach_pakora",
+    "onion_bhaji",
+    "bhajias",
+    "cabbage_pakodas",
+    "ribbon_pakoda"
+  ],
+
+  "stuffed_fried_snacks": [
+    "samosa",
+    "vegetable_samosa",
+    "beef_samosa",
+    "ragda_patties",
+    "cutlets",
+    "vegetable_cutlets",
+    "fish_cutlets",
+    "vazhapoo_cutlet",
+    "egg_patties"
+  ],
+
+  "kebab_tikka": [
+    "seekh_kababs",
+    "shami_kebab",
+    "bihari_kabab",
+    "galouti_kebab",
+    "hara_bhara_kebabs",
+    "reshmi_kebab",
+    "lamb_tikka",
+    "fish_tikka",
+    "salmon_tikka",
+    "tandoori_chicken_kebabs",
+    "tandoori_prawns",
+    "tandoori_shrimp"
+  ],
+
+  "dry_meat_fry": [
+    "chicken_fry",
+    "pepper_chicken",
+    "tandoori_chicken",
+    "grilled_chicken",
+    "chicken_65",
+    "chili_chicken",
+    "chargha",
+    "roast_chicken_masala"
+  ],
+
+  "fish_fry": [
+    "king_fish_fry",
+    "spicy_fish_fry",
+    "broiled_indian_spiced_fish",
+    "blackened_indian_salmon",
+    "indian_fish_pakoras",
+    "fish_fingers"
+  ],
+
+  "egg_based_dish": [
+    "egg_masala",
+    "khagina",
+    "scrambled_eggs",
+    "spicy_eggs"
+  ],
+
+  "minced_meat": [
+    "chicken_keema",
+    "kheema",
+    "kheema_curry",
+    "kheema_matar",
+    "lamb_keema",
+    "bell_pepper_mince"
+  ],
+
+  "burger": [
+    "chicken_burger",
+    "chickpea_burgers",
+    "black_bean_burgers",
+    "red_kidney_bean_burger",
+    "vegetable_hot_dog"
+  ],
+
+  "sandwich": [
+    "egg_masala_sandwich",
+    "cheese_and_pineapple_sandwiches",
+    "tuna_sandwich"
+  ],
+
+  "noodles_stirfry": [
+    "vegetable_chow_mein",
+    "hot_and_sweet_noodles",
+    "shrimp_singapore_noodles",
+    "mint_noodles",
+    "capsicum_and_egg_noodle_stir_fry"
+  ],
+
+  "dry_vegetable_sabzi": [
+    "aloo_gobi",
+    "bhindi_bhaji",
+    "okra_fry",
+    "okra_masala",
+    "beans_poriyal",
+    "beetroot_fry",
+    "dry_potato_sabji"
+  ]
+}
